@@ -1,0 +1,18 @@
+{
+"bg": "https://w.wallhaven.cc/full/4y/wallhaven-4yjmpl.jpg",
+"title": "título do quiz", 
+"description": "descrição do seu quiz aqui", 
+"questions" : [], 
+"theme": {
+    "colors":{
+        "primary": "#311b92",
+        "secondary": "#4a148c",
+        "mainBg": "#434343",
+        "contrastText": "white" ,
+        "wrong" : "red", 
+        "success" : "green" 
+
+    }, 
+    "borderRadius" : "4px"
+}
+} 
