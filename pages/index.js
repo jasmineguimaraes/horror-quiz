@@ -1,18 +1,19 @@
+import React from 'react';
 import styled from 'styled-components';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 import db from '../db.json';
 import Widget from '../src/components/Widget';
-import Footer from '../src/components/Footer'; 
+import Footer from '../src/components/Footer';
 import GithubCorner from '../src/components/GithubCorner';
 import QuizBackground from '../src/components/QuizBackground';
 
-
-
-//const BackgroundImage = styled.div`
-//background-image: url(${db.bg}); 
-//flex: 1; 
-//background-size: cover; 
-//background-position: center; 
-//`;
+// const BackgroundImage = styled.div`
+// background-image: url(${db.bg});
+// flex: 1;
+// background-size: cover;
+// background-position: center;
+// `;
 
 export const QuizContainer = styled.div`
   width: 100%; 
@@ -25,37 +26,66 @@ export const QuizContainer = styled.div`
   }
 
   `;
-  
-  
 
 export default function Home() {
-  return(
-  <QuizBackground backgroundImage = {db.bg}>
+  const router = useRouter();
+  const [name, setName] = React.useState('');
+  console.log('retorno do useState', name, setName);
+  return (
+    <QuizBackground backgroundImage={db.bg}>
 
-    <QuizContainer>
-      
-      <Widget>
-        <Widget.Header>
-        <h1>Filmes de Terror</h1>
-        </Widget.Header>
-        <Widget.Content>
-      
-      <p>lorem ipsum dolor sit amet...</p>
-      </Widget.Content>
-      </Widget>
+      <QuizContainer>
+        <Head>
+          <title>Horror Quiz</title>
+        </Head>
+        <Widget>
+          <Widget.Header>
+            Quiz de filmes de terror
+          </Widget.Header>
+          <Widget.Content>
+            <form onSubmit={function (infosDoEvento) {
+              infosDoEvento.preventDefault();
+              router.push(`/quiz?name=${name}`);
+              //  console.log('fazendo uma submissão por react');
+              //  router manda para a próxima página
+            }}
+            >
+              <input
+                onChange={function (infosDoEvento) {
+                  console.log(infosDoEvento.target.value);
+                  //  name = infosDoEvento.target.value;
+                  setName(infosDoEvento.target.value);
+                }}
+                placeholder="Diz aí seu nome para poder jogar :)" />
+              <button type="submit" disabled={name.lenght === undefined || name.lenght === 0}>
+                Jogar
+                {name}
+              </button>
+            </form>
+          </Widget.Content>
+        </Widget>
+        <Widget>
+          <Widget.Header>
+            'What's your favorite scary movie?'
+          </Widget.Header>
+          <Widget.Content>
 
-      <Widget>
-        <Widget.Content>
-      
-      <p>lorem ipsum dolor sit amet...</p>
-      </Widget.Content>
-      </Widget>
-      <Footer />
+            <p>lorem ipsum dolor sit amet...</p>
+          </Widget.Content>
+        </Widget>
 
-      
-    </QuizContainer>
-    <GithubCorner />
-  </QuizBackground>
+        <Widget>
+          <Widget.Content>
 
-);
-  }
+            <p>lorem ipsum dolor sit amet...</p>
+          </Widget.Content>
+        </Widget>
+        <Footer />
+
+      </QuizContainer>
+      { /*  eslint-disable-next-line react/react-in-jsx-scope */}
+      <GithubCorner />
+    </QuizBackground>
+
+  );
+}
